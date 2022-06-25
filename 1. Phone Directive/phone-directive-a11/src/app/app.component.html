@@ -1,70 +1,105 @@
-<p>
-  <b>Exercise 1.</b> You have to develop an AngularJS directive called 'canadaPhone', and its equivalent for Angular 11.
-</p>
+<section class="exercise">
+  <p>
+    <b>Exercise 1.</b> You have to develop an AngularJS directive called 'canadaPhone', and its equivalent for Angular
+    11.
+  </p>
 
-<h3>
-  Requirements
-</h3>
-<ul>
-  <li>
-    It should be applied to text inputs as follows:
-    <pre>
-      &lt;input type="text" ng-model="phone" canada-phone /&gt;
-    </pre>
-  </li>
-  <li>
-    It should format the value of the input with the canadian phone number format "(XXX) XXX-XXXX". This means that the
-    user should type in only numbers, and the directive should add the parentheses and hyphen symbols.
-  </li>
-  <li>
-    It should validate that the phone is correct. The phone is correct when it contains 10 digits.
-  </li>
-  <li>
-    The formatting should be visual only. The ng-model of the directive should ONLY contain numbers, without symbols or
-    spaces.
-  </li>
-</ul>
+  <h3>
+    Requirements
+  </h3>
+  <ul>
+    <li>
+      It should be applied to text inputs as follows:
+      <pre>
+        &lt;input type="text" ng-model="phone" canada-phone /&gt;
+      </pre>
+    </li>
+    <li>
+      It should format the value of the input with the canadian phone number format "(XXX) XXX-XXXX". This means that
+      the
+      user should type in only numbers, and the directive should add the parentheses and hyphen symbols.
+    </li>
+    <li>
+      It should validate that the phone is correct. The phone is correct when it contains 10 digits.
+    </li>
+    <li>
+      The formatting should be visual only. The ng-model of the directive should ONLY contain numbers, without symbols
+      or
+      spaces.
+    </li>
+  </ul>
 
-<h3>
-  Examples:
-</h3>
-<ul>
-  <li>
-    The user types "9876543210". The input text should show "(987) 654-3210". The model value should be 9876543210.
-  </li>
-  <li>
-    The user types "987654321". The input text should show "(987) 654-321". This value should be validated as invalid as
-    it only contains 9 characters, and the model value should be null.
-  </li>
-</ul>
+  <h3>
+    Examples:
+  </h3>
+  <ul>
+    <li>
+      The user types "9876543210". The input text should show "(987) 654-3210". The model value should be 9876543210.
+    </li>
+    <li>
+      The user types "987654321". The input text should show "(987) 654-321". This value should be validated as invalid
+      as
+      it only contains 9 characters, and the model value should be null.
+    </li>
+  </ul>
 
-<h3>
-  Nice to have
-</h3>
-<p>
-  The canadian phone numbers can't start by 1, as it could be interpreted as the US international prefix. If the user
-  types a 1 as the first character, it should be ignored.
-</p>
+  <h3>
+    Nice to have
+  </h3>
+  <p>
+    The canadian phone numbers can't start by 1, as it could be interpreted as the US international prefix. If the user
+    types a 1 as the first character, it should be ignored.
+  </p>
 
-<h3>
-  Examples:
-</h3>
+  <h3>
+    Examples:
+  </h3>
 
-<ul>
-  <li>
-    The user types "1234567890". The input text should show "(234) 567-890". This value should be validated as invalid
-    as it only contains 9 characters, and the model value should be null.
-  </li>
-  <li>
-    The user types "12345678901". The input should show "(234) 567-8901". The model value should be 2345678901.
-  </li>
-</ul>
+  <ul>
+    <li>
+      The user types "1234567890". The input text should show "(234) 567-890". This value should be validated as invalid
+      as it only contains 9 characters, and the model value should be null.
+    </li>
+    <li>
+      The user types "12345678901". The input should show "(234) 567-8901". The model value should be 2345678901.
+    </li>
+  </ul>
+</section>
 
-<section>
-  <h3>Solution:</h3>
+<section class="solution">
+  <h3>Solution (Regular Expressions):</h3>
   <div class="input-element">
     <label for="canadaNumber">Type Canadian Number</label>
     <input type="text" id="canadaNumber" [(ngModel)]="phoneNumber" autocomplete="off"
-      placeholder="(          )        -" canada-phone> {{ phoneNumber }}
+      placeholder="(xxx) xxx-xxxx" canada-phone>
+    <span>
+      Model value: {{ phoneNumber }}
+    </span>
   </div>
+  
+  <hr />
+
+  <h3>Solution (JavaScript):</h3>
+  <div class="input-element">
+    <label for="canadaNumberJS">Type Canadian Number</label>
+    <input type="text" id="canadaNumberJS" [(ngModel)]="phoneNumberJS" autocomplete="off"
+      placeholder="(xxx) xxx-xxxx" canada-phone-js>
+    <span>
+      Model value: {{ phoneNumberJS }}
+    </span>
+  </div>
+  
+  <hr />
+
+  <h3>Solution (External library):</h3>
+  <div class="input-element">
+    <label for="canadaNumberExt">Type Canadian Number</label>
+    <input type="text" id="canadaNumberExt" [(ngModel)]="phoneNumberExt" autocomplete="off"
+      placeholder="(xxx) xxx-xxxx" canada-phone-ext>
+    <span>
+      Model value: {{ phoneNumberExt }}
+    </span>
+  </div>
+
+
 </section>

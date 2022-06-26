@@ -8,7 +8,7 @@ import { CanadaPhoneDirective } from './shared/directives/canada-phone.directive
   providers: [CanadaPhoneDirective]
 })
 export class AppComponent {
-  phoneNumber: any = '';
+  phone: any = '';
   phoneNumberJS: any = '';
   phoneNumberExt: any = '';
 }

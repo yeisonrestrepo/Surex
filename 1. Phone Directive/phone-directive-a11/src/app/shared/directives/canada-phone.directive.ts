@@ -1,81 +1,112 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
-import { AbstractControl, NgModel, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
+import { Directive, ElementRef, forwardRef, HostListener, Renderer2 } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Directive({
   selector: '[canada-phone]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: CanadaPhoneDirective, multi: true }, [NgModel]]
+  providers: [
+    { provide: NG_VALIDATORS, useExisting: CanadaPhoneDirective, multi: true },
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CanadaPhoneDirective), multi: true },
+  ]
 })
-export class CanadaPhoneDirective implements Validator {
-  private _keyPressed!: number;
-  private readonly _BACKSPACECODE = 8;
+export class CanadaPhoneDirective implements Validator, ControlValueAccessor {
+  private onChange: Function;
+  private onTouched: Function;
+  private keyPressed!: number;
+
+  private element: HTMLInputElement;
+  private readonly BACKSPACECODE = 8;
 
   @HostListener('keydown', ['$event']) public onKeyDown(e: KeyboardEvent): void {
-    this._keyPressed = e.keyCode;
+    this.keyPressed = e.keyCode;
+    const value = this.element.value;
+    if (value === '' && (this.keyPressed === 49 || this.keyPressed === 97)) {
+      e.preventDefault();
+    }
     e.stopImmediatePropagation();
   }
 
-  constructor(private el: ElementRef) { }
+  @HostListener("input", ["$event"])
+  onInput(event: Event) {
+    event.stopImmediatePropagation();
+    const value = this.element.value;
+    this.renderer.setProperty(this.element, 'value', this.addFormat(value));
+    this.onTouched();
+    this.onChange(this.removeFormat(value, true));
+  }
 
-  public validate(control: AbstractControl): ValidationErrors | null {
-    const input: HTMLInputElement = <HTMLInputElement>this.el.nativeElement;
+  constructor(private renderer: Renderer2, private el: ElementRef) {
+    this.onChange = (_: any) => { }
+    this.onTouched = (_: any) => { }
+    this.element = <HTMLInputElement>this.el.nativeElement;
+  }
+
+  writeValue(value: any): void {
+    if (value) {
+      this.renderer.setProperty(this.element, 'value', value);
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (control.value !== '') {
+      return null;
+    } else {
+      return { 'invalid': true };
+    }
+  }
+
+  private addFormat(value: any) {
+    if (typeof (value) == typeof (undefined))
+      return value;
+
+    let numbersOnly = this.removeFormat(value);
 
     // Regular expressions to match the number format each stage
-    const areaCodeRegExp = /^(\d{3})$/g;
-    const midPhoneRegExp = /^(\d{3})(\d{3})$/g;
-    const midExpectedRegExp = /^\((\d{3})\)(\s)(\d{3})-$/g;
-    const phoneRegExp = /^(\d{3})(\d{3})(\d{4})$/g;
-    const phoneExpectedRegExp = /^\((\d{3})\)(\s)(\d{3})-(\d{4})$/g;
+    const areaCodeRegExp = /^(\d{1,3})$/g;
+    const midPhoneRegExp = /^(\d{1,3})(\d{1,3})$/g;
+    const midExpectedRegExp = /^\((\d{1,3})\)(\s)(\d{1,3})-$/g;
+    const phoneRegExp = /^(\d{1,3})(\d{1,3})(\d{1,4})$/g;
+    const phoneExpectedRegExp = /^\((\d{1,3})\)(\s)(\d{1,3})-(\d{1,4})$/g;
 
-    // Handle the format across all validations
-    let formatted = '';
+    let parsedValue = '';
 
-    // Makes sure the control is initialized and contains some value
-    if (!control || !input.value) {
-      return null;
-    }
-
-    // Reset the format from the input by taking only numbers
-    const inputValueOnlyNumbers = input.value.replace(/\D/g, '');
-
-    // Verifying the input length to restrict the input size
-    if (inputValueOnlyNumbers.length > 10) {
-      control.setValue(inputValueOnlyNumbers.substring(0, 10), { emitEvent: false });
-      return null;
-    }
-
-    // First character cannot start with 1
-    if (inputValueOnlyNumbers.length === 1 && inputValueOnlyNumbers === '1') {
-      control.setValue('', { emitEvent: false });
-      return null;
-    }
-
-    // Removing the last value from the input
-    if (this._keyPressed === this._BACKSPACECODE && control.value.length > 0) {
-      const resetLength = input.value.slice(0, 10);
-      input.value = resetLength;
-    } else if (inputValueOnlyNumbers.length > 0 && inputValueOnlyNumbers.length <= 3) { // Formatting phone area code
-      formatted = inputValueOnlyNumbers.replace(areaCodeRegExp, '($1) ');
-      input.value = formatted;
-    } else if (inputValueOnlyNumbers.length > 3 && inputValueOnlyNumbers.length <= 6) { // Formatting phone area+mid numbers
-      formatted = inputValueOnlyNumbers.replace(midPhoneRegExp, '($1) $2-')
+    if (this.keyPressed === this.BACKSPACECODE && numbersOnly.length > 0) {
+      parsedValue = value.slice(0, value.length);
+    } else if (numbersOnly.length > 0 && numbersOnly.length <= 3) {
+      parsedValue = numbersOnly.replace(areaCodeRegExp, '($1) ');
+    } else if (numbersOnly.length > 3 && numbersOnly.length <= 6) {
+      const formatted = numbersOnly.replace(midPhoneRegExp, '($1) $2-')
       if (midExpectedRegExp.test(formatted)) {
-        input.value = formatted;
+        parsedValue = formatted;
+      } else {
+        parsedValue = numbersOnly
       }
-    } else if (inputValueOnlyNumbers.length > 6 && inputValueOnlyNumbers.length <= 10) { // Formatting phone local number
-      formatted = inputValueOnlyNumbers.replace(phoneRegExp, '($1) $2-$3');
+    } else if (numbersOnly.length > 6 && numbersOnly.length <= 10) {
+      const formatted = numbersOnly.replace(phoneRegExp, '($1) $2-$3');
       if (phoneExpectedRegExp.test(formatted)) {
-        input.value = formatted;
-        return { 'invalid': false }
+        parsedValue = formatted;
       }
     }
 
-    // setting the number without format to the ngModel
-    if (control.value.length !== inputValueOnlyNumbers.length) {
-      control.setValue(inputValueOnlyNumbers, { emitEvent: false });
-    }
+    return parsedValue;
+  }
 
-    // The default state of the input will be invalid unless 
-    // the number contains 10 characters and the local number format
-    return { 'invalid': true }; // otherwise it's invalid
+  private removeFormat(value: any, isModelValue = false) {
+    let numbersOnly = value.replace(/\D/g, '');
+    numbersOnly = numbersOnly.substring(0, 10);
+    if (isModelValue) {
+      if (numbersOnly.length === 10) {
+        return numbersOnly;
+      }
+      return ''
+    }
+    return numbersOnly;
   }
 }

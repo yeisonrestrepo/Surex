@@ -19,6 +19,7 @@ export class JavascriptOnlyDirective implements Validator {
       return null;
     }
 
+    // Verifying the input length to restrict the input size
     if (input.length > 10) {
       control.setValue(input.substring(0, 10), { emitEvent: false });
       return null;
@@ -30,6 +31,7 @@ export class JavascriptOnlyDirective implements Validator {
       return null;
     }
 
+    // Separating the number phone into smaller pieces
     const areaCode = input.substring(0, 3);
     const middle = input.substring(3, 6);
     const last = input.substring(6, 10);

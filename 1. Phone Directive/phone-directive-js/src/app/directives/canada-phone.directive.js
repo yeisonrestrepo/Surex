@@ -66,7 +66,7 @@
                     }
 
                     const parsePhoneValue = function (value) {
-                        var viewValue = addFormat(value);
+                        let viewValue = addFormat(value);
                         ngModel.$viewValue = viewValue;
                         ngModel.$render();
 

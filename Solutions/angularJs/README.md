@@ -8,4 +8,4 @@ Before starting the application, make sure you have the dependencies correctly i
 
 ## Development server
 
-You can open the index.html in your browser to see the application running.
+You can open the `index.html` file in your browser to see the application running.

@@ -2,5 +2,5 @@
     'use strict';
 
     angular
-        .module('surex', ['ngRoute'])
+        .module('surex', ['ngRoute', 'ngResource', 'ngMockE2E'])
 })();

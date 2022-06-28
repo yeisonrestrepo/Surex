@@ -4,9 +4,6 @@
 
 angular
     .module('surex')
-    .controller('MainController', function ($scope) {
+    .controller('MainController', function () {
         var vm = this;
-
-        $scope.title = "Gestión de usuarios";
-        $scope.phone = '';
     });

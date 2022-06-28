@@ -1,0 +1,39 @@
+<a class="nav-element back" href="/">Back home!</a>
+
+<section class="exercise">
+
+
+
+
+
+    • Write the AngularJS code using the $q service.
+    • Write the equivalent code using Promise objects.
+    <p>
+        <b>Exercise 2.</b> There are multiple resources to be updated and/or removed using HTTP requests. The requests
+        should be executed in a certain order, otherwise the server will refuse some of them.
+    </p>
+
+    <p>
+        The Resource class has the following functions in its prototype, <b>$update</b> (PUT http) and <b>$delete</b>
+        (DELETE http). Both functions return a <b>promise</b>.
+    </p>
+
+    <p>The execution order consists on executing first all the resources to be deleted. Then, once all the previous
+        promises are resolved, execute all the resources to be updated. In case of any promise has failed then output a
+        message with console log.</p>
+
+    <p>
+        Having the following structures:
+    </p>
+    <pre>
+        <code>
+            // The objects on every array are Resource types 
+            const scheduledForDeletion = [resource1, resource2]; 
+            const scheduledForUpdate = [resource3, resource4];
+        </code>
+    </pre>
+</section>
+
+<section class="solution" ng-init="initCallsWithQ()">
+    <p>Please open the browser developer tools to see the log info.</p>
+</section>

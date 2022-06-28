@@ -8,6 +8,8 @@
 
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="node_modules/angular-route/angular-route.min.js"></script>
+    <script src="node_modules/angular-resource/angular-resource.min.js"></script>
+    <script src="node_modules/angular-mocks/angular-mocks.js"></script>
     
     <link rel="stylesheet" href="src/assets/css/styles.css">
 </head>
@@ -15,7 +17,11 @@
     <ng-view></ng-view>
     <script src="src/app/app.js"></script>
     <script src="src/app/app.router.js"></script>
+    <script src="src/app/app.fakebackend.js"></script>
+    <script src="src/app/services/api.service.js"></script>
     <script src="src/app/controllers/main.controller.js"></script>
+    <script src="src/app/controllers/phone.controller.js"></script>
+    <script src="src/app/controllers/call.controller.js"></script>
     <script src="src/app/directives/canada-phone.directive.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# Surex angular 11 project
+# Surex angular JS project
 
 This project contains the related solutions to the Surex take-home assignment
 
@@ -8,4 +8,4 @@ Before starting the application, make sure you have the dependencies correctly i
 
 ## Development server
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+You can open the index.html in your browser to see the application running.

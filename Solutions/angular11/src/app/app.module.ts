@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { CanadaPhoneDirective } from './shared/directives/canada-phone.directive';
 import { JavascriptOnlyDirective } from './shared/directives/javascript-only.directive';
 import { ExternalLibraryDirective } from './shared/directives/external-library.directive';
+import { WatcherDirective } from './shared/directives/watcher.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     CanadaPhoneDirective,
     JavascriptOnlyDirective,
-    ExternalLibraryDirective
+    ExternalLibraryDirective,
+    WatcherDirective
   ],
   imports: [
     BrowserModule,

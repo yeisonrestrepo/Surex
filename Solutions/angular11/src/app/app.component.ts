@@ -1,18 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { CanadaPhoneDirective } from './shared/directives/canada-phone.directive';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [CanadaPhoneDirective]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  phone: any = '';
-  phoneNumberJS: any = '';
-  phoneNumberExt: any = '';
-
-  changer: any = '';
-  prop1: string = '';
-  prop2: number = 0;
 }

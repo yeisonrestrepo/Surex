@@ -1,1 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.menu {
+    margin: unset;
+    list-style: none;
+    
+    li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+}
+
+.nav-element {
+    border: 1px solid gray;
+    border-radius: 7px;
+    padding: 7px 10px;
+    background-color: lightblue;
+    display: inline-block;
+
+    color: black;
+    text-decoration: none;
+    
+    &:hover {
+        background-color: aquamarine;
+    }
+}
+
+.back {
+    position: fixed;
+}
+
+.exercise {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+
+    border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #e2e3e4;
+    padding: 5px 10px;
+
+    pre {
+        background: #f2f2f2;
+        padding: 1em 0;
+    }
+}
+
+.solution {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+
+    .solution-group {
+        background-color: lightblue;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+
+        label {
+            font-weight: normal;
+        }
+
+        input {
+            padding: 7px 12px;
+            border: 1px solid lightseagreen;
+            border-radius: 3px;
+        }
+
+        small {
+            display: block;
+            font-style: italic;
+            line-height: 1.5rem;
+            font-weight: 500;
+        }
+    }
+}

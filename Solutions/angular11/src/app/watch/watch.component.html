@@ -1,0 +1,21 @@
+<a class="nav-element back" href="/">Back home!</a>
+<section class="exercise">
+    <p>
+        <b>Exercise 3.</b> In an AngularJS directive there is a $watch function to detect changes in a ngModel property
+        (the property type is irrelevant)
+    </p>
+
+    <pre>
+        <code [innerText]="example">
+        </code>
+    </pre>
+</section>
+
+<section class="solution" ng-init="initCallsWithQ()">
+    <div class="solution-group">
+        <h3>Solution: (Watch property)</h3>
+        <label for="property1">Property 1</label>
+        <input type="text" [(ngModel)]="prop1" [property1]="prop1" [property2]="prop2" watcher>
+        <p>Please open the browser developer tools to see the log info.</p>
+    </div>
+</section>

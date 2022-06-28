@@ -7,6 +7,10 @@ import { CanadaPhoneDirective } from './shared/directives/canada-phone.directive
 import { JavascriptOnlyDirective } from './shared/directives/javascript-only.directive';
 import { ExternalLibraryDirective } from './shared/directives/external-library.directive';
 import { WatcherDirective } from './shared/directives/watcher.directive';
+import { AppRoutingModule } from './app-routing.module';
+import { PhonesComponent } from './phones/phones.component';
+import { WatchComponent } from './watch/watch.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +18,15 @@ import { WatcherDirective } from './shared/directives/watcher.directive';
     CanadaPhoneDirective,
     JavascriptOnlyDirective,
     ExternalLibraryDirective,
-    WatcherDirective
+    WatcherDirective,
+    PhonesComponent,
+    WatchComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
